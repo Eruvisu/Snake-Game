@@ -11,23 +11,32 @@
 using namespace std;
 
 bool gameOver;
+bool continueGame;
 const int width = 20;
 const int height = 20;
 int x, y, fruitX, fruitY, score;
 int tailX[100], tailY[100];
-int nTail=0;
+int nTail;
 enum eDirection{STOP=0,LEFT,RIGHT,UP,DOWN};
 eDirection dir;
 
 void Setup()
 {
 	gameOver = false;
+	continueGame = true;
 	dir = STOP;
 	x = width / 2;
 	y = height / 2;
 	fruitX = rand() % width;
 	fruitY = rand() % height;
 	score = 0;
+	nTail = 0;
+	for (int i = 0; i < 100; i++)
+	{
+		tailX[i] = 0;
+		tailY[i] = 0;
+	}
+	
 }
 void Draw()
 {
@@ -140,7 +149,8 @@ void Logic()
 	
 	for (int i = 0; i < nTail; i++)
 		if (tailX[i] == x&&tailY[i] == y)
-			gameOver = true;
+			//gameOver = true;
+			continueGame = false;
 
 	if (x == fruitX&&y == fruitY)
 	{
@@ -164,7 +174,16 @@ int main()
 		Logic();
 		Sleep(200);
 		//sleep(100); - for linux
+		if (!continueGame)
+		{
+			cout << endl;
+			cout << "Game Over" << endl << "Do you want to start a new game?" << endl << "Yes or No";
+			cout << endl;
+			if (_getch() == 'y')
+				Setup();
+			else gameOver = true;
+		}
 	}
-    return 0;
+    //return 0;
 }
 
