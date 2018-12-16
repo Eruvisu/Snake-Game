@@ -1,3 +1,3 @@
 # Snake-Game
 
-This is a simple snake game in C++
+Snake game written using different programming languages.
